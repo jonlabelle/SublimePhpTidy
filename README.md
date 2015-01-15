@@ -10,7 +10,9 @@ to your Sublime Text 2 or 3 `Packages` directory.
 
 ## Usage
 
-- `ctrl/cmd + shift + P` and type `Tidy PHP`.
+PHP Tidy can be accessed from the Sublime Text command palette...
+
+- `ctrl/cmd + shift + P` : ***Tidy PHP***
 
 ## Credits
 
@@ -25,3 +27,7 @@ to your Sublime Text 2 or 3 `Packages` directory.
 - Cross-platform support for temp files.
 - Cross platform support for PHP Tidy script.
 - Improved error handling in Sublime Text.
+
+## Author
+
+Jon LaBelle <contact@jonlabelle.com>
