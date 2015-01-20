@@ -11,7 +11,6 @@ import sublime
 import sublime_plugin
 
 PY_VERSION = sys.version_info[0]
-ST_VERSION = sublime.version()[0]
 OS_PLATFORM = platform.system()
 
 PLUGIN_PATH = os.path.abspath(os.path.dirname(__file__))
