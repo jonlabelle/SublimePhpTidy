@@ -393,7 +393,6 @@ foreach ($files as $file)
 		break;
 	}
 }
-
 if ($command == "replace")
 {
 	if ($replaced)
@@ -540,7 +539,6 @@ function phptidy($source)
 	{
 		fix_docblock_space($tokens);
 	}
-
 	if ($GLOBALS['add_blank_lines'])
 	{
 		add_blank_lines($tokens);
@@ -763,14 +761,15 @@ function get_argument_tokens(&$tokens, $key)
 				break;
 			}
 		}
-
 		if ($token === "(")
 		{
 			++$round_braces_count;
-		} elseif ($token === ")")
+		}
+		elseif ($token === ")")
 		{
 			--$round_braces_count;
-		} elseif (
+		}
+		elseif (
 			$token === "{" or (
 				is_array($token) and (
 					$token[0] === T_CURLY_OPEN or
@@ -780,11 +779,11 @@ function get_argument_tokens(&$tokens, $key)
 		)
 		{
 			++$curly_braces_count;
-		} elseif ($token === "}")
+		}
+		elseif ($token === "}")
 		{
 			--$curly_braces_count;
 		}
-
 		if ($round_braces_count < 0 or $round_braces_count < 0)
 		{
 			break;
@@ -938,7 +937,6 @@ function fix_builtin_functions_case(&$tokens)
 		{
 			continue;
 		}
-
 		if (
 			$tokens[$key+1] === "("
 		)
@@ -951,7 +949,8 @@ function fix_builtin_functions_case(&$tokens)
 			{
 				$token[1] = $lowercase;
 			}
-		} elseif (
+		}
+		elseif (
 			$tokens[$key+2] === "(" and
 			is_array($tokens[$key+1]) and $tokens[$key+1][0] === T_WHITESPACE
 		)
@@ -1029,7 +1028,6 @@ function replace_phptags(&$tokens)
 				$whitespace .= $tokens[$key+1][1];
 				array_splice($tokens, $key+1, 1);
 			}
-
 			if ($GLOBALS['open_tag'] == "<?")
 			{
 				// Short open tags have the following whitespace in a seperate token
@@ -1067,7 +1065,6 @@ function replace_phptags(&$tokens)
 			{
 				continue;
 			}
-
 			if ($tokens[$key+1][0] === T_WHITESPACE)
 			{
 				// If there is already whitespace following we only replace the open tag
@@ -1163,7 +1160,8 @@ function fix_statement_brackets(&$tokens)
 				if ($t === "(")
 				{
 					++$round_braces_count;
-				} elseif ($t === ")")
+				}
+				elseif ($t === ")")
 				{
 					--$round_braces_count;
 				}
@@ -1238,7 +1236,8 @@ function fix_separation_whitespace(&$tokens)
 					array_splice($tokens, $key+1, 0, array(
 							array(T_WHITESPACE, separation_whitespace($control_structure)),
 						));
-				} elseif (
+				}
+				elseif (
 					isset($tokens[$key+1][0]) and $tokens[$key+1][0] === T_WHITESPACE and
 					isset($tokens[$key+2]) and $tokens[$key+2] === "{"
 				)
@@ -1268,7 +1267,8 @@ function fix_separation_whitespace(&$tokens)
 						array_splice($tokens, $key+3, 0, array(
 								array(T_WHITESPACE, separation_whitespace(T_CLASS)),
 							));
-					} elseif (
+					}
+					elseif (
 						isset($tokens[$key+3][0]) and $tokens[$key+3][0] === T_WHITESPACE and
 						isset($tokens[$key+4]) and $tokens[$key+4] === "{"
 					)
@@ -1304,7 +1304,8 @@ function fix_separation_whitespace(&$tokens)
 					array_splice($tokens, $key+1, 0, array(
 							array(T_WHITESPACE, separation_whitespace(T_ELSEIF)),
 						));
-				} elseif (
+				}
+				elseif (
 					isset($tokens[$key+1][0]) and $tokens[$key+1][0] === T_WHITESPACE and
 					isset($tokens[$key+2]) and $tokens[$key+2] === "{"
 				)
@@ -1319,7 +1320,8 @@ function fix_separation_whitespace(&$tokens)
 					array_splice($tokens, $key, 0, array(
 							array( T_WHITESPACE, separation_whitespace(T_ELSEIF) ),
 						));
-				} elseif (
+				}
+				elseif (
 					isset($tokens[$key-1][0]) and $tokens[$key-1][0] === T_WHITESPACE and
 					isset($tokens[$key-2]) and $tokens[$key-2] === "}"
 				)
@@ -1350,7 +1352,8 @@ function fix_separation_whitespace(&$tokens)
 					array_splice($tokens, $key+1, 0, array(
 							array(T_WHITESPACE, separation_whitespace(T_DO)),
 						));
-				} elseif (
+				}
+				elseif (
 					isset($tokens[$key+1][0]) and $tokens[$key+1][0] === T_WHITESPACE and
 					isset($tokens[$key+2]) and $tokens[$key+2] === "{"
 				)
@@ -1365,7 +1368,8 @@ function fix_separation_whitespace(&$tokens)
 					array_splice($tokens, $key, 0, array(
 							array( T_WHITESPACE, separation_whitespace(T_DO) ),
 						));
-				} elseif (
+				}
+				elseif (
 					isset($tokens[$key-1][0]) and $tokens[$key-1][0] === T_WHITESPACE and
 					isset($tokens[$key-2]) and $tokens[$key-2] === "}"
 				)
@@ -1431,7 +1435,8 @@ function fix_round_bracket_space(&$tokens)
 			array_splice($tokens, $key+1, 0, array(
 					array(T_WHITESPACE, " "),
 				));
-		} elseif (
+		}
+		elseif (
 			// If the current token is an end round bracket...
 			$token === ")" and
 			// ...and the previous token is no whitespace
@@ -1518,7 +1523,8 @@ function fix_docblock_format(&$tokens)
 			if (substr($line, 0, 1) != "*")
 			{
 				$line = "* ".$line;
-			} elseif ($line != "*" and substr($line, 0, 2) != "* ")
+			}
+			elseif ($line != "*" and substr($line, 0, 2) != "* ")
 			{
 				$line = "* ".substr($line, 1);
 			}
@@ -1532,7 +1538,6 @@ function fix_docblock_format(&$tokens)
 				}
 				$comments_started = true;
 			}
-
 			if (substr($line, 0, 3) == "* @")
 			{
 				// Add empty line before DocTags if missing
@@ -1675,7 +1680,6 @@ function sort_doctags_cmp($a, $b)
 			break;
 		}
 	}
-
 	if ($rank_a < $rank_b)
 	{
 		return -1;
@@ -1709,7 +1713,6 @@ function fix_docblock_space(&$tokens)
 		{
 			continue;
 		}
-
 		if ($filedocblock)
 		{
 			// Exactly 2 empty lines after the file DocBlock
@@ -1775,7 +1778,6 @@ function add_blank_lines(&$tokens)
 			}
 			continue;
 		}
-
 		if (is_array($token))
 		{
 			// Detect beginning of a HEREDOC block
@@ -1799,7 +1801,6 @@ function add_blank_lines(&$tokens)
 				continue;
 			}
 		}
-
 		if ($token === "}")
 		{
 			if ($curly_brace_opener[$curly_braces_count] === T_FUNCTION or $curly_brace_opener[$curly_braces_count] === T_CLASS)
@@ -1814,7 +1815,8 @@ function add_blank_lines(&$tokens)
 				}
 			}
 			--$curly_braces_count;
-		} elseif (
+		}
+		elseif (
 			$token === "{" or (
 				is_array($token) and (
 					$token[0] === T_CURLY_OPEN or
@@ -1885,10 +1887,12 @@ function indent(&$tokens)
 					if ($tokens[$key+1] === "}")
 					{
 						--$curly_braces_count;
-					} elseif ($tokens[$key+1] === ")")
+					}
+					elseif ($tokens[$key+1] === ")")
 					{
 						--$round_braces_count;
-					} elseif ($tokens[$key+1] === "]")
+					}
+					elseif ($tokens[$key+1] === "]")
 					{
 						--$square_braces_count;
 					}
@@ -1906,29 +1910,31 @@ function indent(&$tokens)
 					if ($tokens[$key+2] === "}")
 					{
 						--$curly_braces_count;
-					} elseif ($tokens[$key+2] === ")")
+					}
+					elseif ($tokens[$key+2] === ")")
 					{
 						--$round_braces_count;
-					} elseif ($tokens[$key+2] === "]")
+					}
+					elseif ($tokens[$key+2] === "]")
 					{
 						--$square_braces_count;
 					}
 				}
 			}
 		}
-
 		if ($token === "(")
 		{
 			++$round_braces_control;
-		} elseif ($token === ")")
+		}
+		elseif ($token === ")")
 		{
 			--$round_braces_control;
 		}
-
 		if ($token === "[")
 		{
 			++$square_braces_count;
-		} elseif ($token === "(")
+		}
+		elseif ($token === "(")
 		{
 			if ($round_braces_control == 1)
 			{
@@ -1954,7 +1960,8 @@ function indent(&$tokens)
 			}
 
 			++$round_braces_count;
-		} elseif (
+		}
+		elseif (
 			(
 				$token === ")" and
 				$round_braces_control == 0 and
@@ -1984,7 +1991,8 @@ function indent(&$tokens)
 			{
 				$control_structure[$curly_braces_count] = 1;
 			}
-		} elseif ($token === ";" or $token === "}")
+		}
+		elseif ($token === ";" or $token === "}")
 		{
 			// After a command or a set of commands a control structure is closed.
 			if (!empty($control_structure[$curly_braces_count]))
@@ -2004,7 +2012,6 @@ function indent(&$tokens)
 				$trinity_started
 			);
 		}
-
 		if (
 			$token === "{" or (
 				is_array($token) and (
@@ -2166,14 +2173,16 @@ function indent_text(&$tokens, $key, $curly_braces_count, $round_braces_count, $
 		)
 		{
 			++$indent;
-		} elseif (
+		}
+		elseif (
 			(isset($tokens[$key+1]) and $tokens[$key+1] === "?") or
 			(isset($tokens[$key-1]) and $tokens[$key-1] === "?")
 		)
 		{
 			++$indent;
 			$trinity_started = true;
-		} elseif (
+		}
+		elseif (
 			$trinity_started and (
 				(isset($tokens[$key+1]) and $tokens[$key+1] === ":") or
 				(isset($tokens[$key-1]) and $tokens[$key-1] === ":")
@@ -2201,7 +2210,6 @@ function indent_text(&$tokens, $key, $curly_braces_count, $round_braces_count, $
 	{
 		return;
 	}
-
 	if (is_string($tokens[$key+1]))
 	{
 		$text2 = & $tokens[$key+1];
@@ -2247,7 +2255,8 @@ function strip_closetag_indenting(&$tokens)
 			)
 			{
 				$tokens[$key-1][1] = preg_replace("/\n[ \t]*$/", "\n", $tokens[$key-1][1]);
-			} elseif (
+			}
+			elseif (
 				// T_WHITESPACE before without \n
 				isset($tokens[$key-1]) and
 				is_array($tokens[$key-1]) and
@@ -2291,11 +2300,13 @@ function get_functions(&$content)
 			if ($token === "{")
 			{
 				++$curly_braces_count;
-			} elseif ($token === "}")
+			}
+			elseif ($token === "}")
 			{
 				--$curly_braces_count;
 			}
-		} elseif (
+		}
+		elseif (
 			$token[0] === T_FUNCTION and
 			$curly_braces_count === 0 and
 			isset($tokens[$key+2]) and
@@ -2326,7 +2337,6 @@ function find_includes(&$seetags, &$content, $file)
 		{
 			continue;
 		}
-
 		if (!in_array($token[0], array(T_REQUIRE, T_REQUIRE_ONCE, T_INCLUDE, T_INCLUDE_ONCE)))
 		{
 			continue;
@@ -2340,13 +2350,11 @@ function find_includes(&$seetags, &$content, $file)
 		{
 			$t = array_splice($t, 1, -1);
 		}
-
 		if (!$t)
 		{
 			possible_syntax_error($tokens, $key, "Missing argument");
 			continue;
 		}
-
 		if (!is_array($t[0]))
 		{
 			continue;
@@ -2361,7 +2369,6 @@ function find_includes(&$seetags, &$content, $file)
 		{
 			$t = array_splice($t, 2);
 		}
-
 		if (
 			count($t) == 1 and
 			$t[0][0] === T_CONSTANT_ENCAPSED_STRING
@@ -2371,7 +2378,6 @@ function find_includes(&$seetags, &$content, $file)
 			$seetags[$includedfile][] = array($file);
 			continue;
 		}
-
 		if (!$t)
 		{
 			possible_syntax_error($tokens, $key, "String concatenator without following string");
@@ -2548,7 +2554,8 @@ function collect_doctags(&$tokens)
 			if ($token === "{")
 			{
 				++$curly_braces_count;
-			} elseif ($token === "}")
+			}
+			elseif ($token === "}")
 			{
 				if (--$curly_braces_count == 0)
 				{
@@ -2572,7 +2579,6 @@ function collect_doctags(&$tokens)
 				{
 					break;
 				}
-
 				if (is_string($tokens[$k]) or $tokens[$k][0] !== T_WHITESPACE)
 				{
 					possible_syntax_error($tokens, $k, "No whitespace found between function keyword and function name");
@@ -2586,7 +2592,6 @@ function collect_doctags(&$tokens)
 				{
 					++$k;
 				}
-
 				if (is_string($tokens[$k]) or $tokens[$k][0] !== T_STRING)
 				{
 					possible_syntax_error($tokens, $k, "No string for function name found");
@@ -2607,10 +2612,12 @@ function collect_doctags(&$tokens)
 						if ($tokens[$k] === "(")
 						{
 							++$round_braces_count;
-						} elseif ($tokens[$k] === ")")
+						}
+						elseif ($tokens[$k] === ")")
 						{
 							--$round_braces_count;
-						} elseif ($tokens[$k] === "&")
+						}
+						elseif ($tokens[$k] === "&")
 						{
 							$reference = true;
 						}
@@ -2623,7 +2630,8 @@ function collect_doctags(&$tokens)
 						)
 						{
 							$typehint = "";
-						} elseif (
+						}
+						elseif (
 							$tokens[$k][0] === T_ARRAY and
 							isset($tokens[$k+1][0]) and $tokens[$k+1][0] === T_WHITESPACE and
 							isset($tokens[$k+2][0]) and $tokens[$k+2][0] === T_VARIABLE
@@ -2631,7 +2639,8 @@ function collect_doctags(&$tokens)
 						{
 							$k += 2;
 							$typehint = "array";
-						} elseif (
+						}
+						elseif (
 							$tokens[$k][0] === T_STRING and
 							isset($tokens[$k+1][0]) and $tokens[$k+1][0] === T_WHITESPACE and
 							isset($tokens[$k+2][0]) and $tokens[$k+2][0] === T_VARIABLE
@@ -2743,7 +2752,8 @@ function add_file_docblock(&$tokens)
 				array(T_WHITESPACE, "\n"),
 			);
 		}
-	} elseif ($tokens[0][0] == T_OPEN_TAG)
+	}
+	elseif ($tokens[0][0] == T_OPEN_TAG)
 	{
 		// File begins with PHP
 
@@ -2774,7 +2784,8 @@ function add_file_docblock(&$tokens)
 					array(T_WHITESPACE, "\n"),
 				));
 		}
-	} elseif ($tokens[0][0] == T_INLINE_HTML)
+	}
+	elseif ($tokens[0][0] == T_INLINE_HTML)
 	{
 		if (preg_match("/^#!\//", $tokens[0][1]))
 		{
@@ -2865,7 +2876,6 @@ function add_function_docblocks(&$tokens)
 		{
 			--$k;
 		}
-
 		if (
 			!isset($tokens[$k-2]) or
 			!is_array($tokens[$k-2]) or
@@ -2885,7 +2895,6 @@ function add_function_docblocks(&$tokens)
 				--$k;
 				++$replace;
 			}
-
 			if (!$comment)
 			{
 				$comment = " *\n";
@@ -2931,7 +2940,6 @@ function add_doctags(&$tokens, $usetags, $paramtags, $returntags, $seetags)
 		{
 			++$k;
 		}
-
 		if (
 			isset($tokens[$k+2][0]) and
 			$tokens[$k][0] === T_FUNCTION and
@@ -2953,7 +2961,8 @@ function add_doctags(&$tokens, $usetags, $paramtags, $returntags, $seetags)
 			{
 				$tokens[$key] = array($id, add_doctags_to_doc_comment($tokens[$key][1], "uses", $usestags[$f]));
 			}
-		} elseif (!$filedocblock)
+		}
+		elseif (!$filedocblock)
 		{
 			// File DocBlock
 			if (isset($usestags[""]))
