@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
-import sys
 import os
-import re
-import subprocess
-import shutil
-import tempfile
 import platform
+import re
+import shutil
 import sublime
 import sublime_plugin
+import subprocess
+import sys
+import tempfile
 
 PY_VERSION = sys.version_info[0]
 OS_PLATFORM = platform.system()
