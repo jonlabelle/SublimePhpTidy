@@ -16,28 +16,27 @@ OS_PLATFORM = platform.system()
 PLUGIN_PATH = os.path.abspath(os.path.dirname(__file__))
 PLUGIN_NAME = 'Php Tidy'
 
-if 3 == PY_VERSION:
-    # python3 and st3
-    from . import shutilwhich
-else:
-    # python2 and st2
-    import shutilwhich
+
+# if 3 == PY_VERSION:
+#     # python3 and st3
+#     from . import shutilwhich
+# else:
+#     # python2 and st2
+#     import shutilwhich
 
 
 class PhpTidyCommand(sublime_plugin.TextCommand):
-
     def run(self, edit):
         view = self.view
 
         # ensure php in path
-        php_path = None
         php_path = shutil.which('php')
         if php_path is None:
             sublime.error_message(
                 '%s Error\n\n'
                 'PHP must be installed and added to your\n'
                 'environment PATH variable in order to use\n'
-                'this plug-in.' % (PLUGIN_NAME))
+                'this plug-in.' % PLUGIN_NAME)
             return
 
         # esnure php tidy script (allman.php)
@@ -58,8 +57,10 @@ class PhpTidyCommand(sublime_plugin.TextCommand):
         self.temp_file_path = self._save_view_in_temp_file(view)
         self.temp_file_name = os.path.basename(self.temp_file_path)
         self.temp_dir = os.path.dirname(os.path.realpath(self.temp_file_path))
-        self.tidy_bkup_file_path = os.path.normpath(os.path.join(self.temp_dir, '.' + self.temp_file_name + '.phptidybak~'))
-        self.tidy_cache_file_path = os.path.join(self.temp_dir, '.phptidy-cache')
+        self.tidy_bkup_file_path = os.path.normpath(os.path.join(
+            self.temp_dir, '.' + self.temp_file_name + '.phptidybak~'))
+        self.tidy_cache_file_path = os.path.join(
+            self.temp_dir, '.phptidy-cache')
 
         startupinfo = None
         if OS_PLATFORM == 'Windows':
@@ -108,12 +109,15 @@ class PhpTidyCommand(sublime_plugin.TextCommand):
         if fixed != self.source:
             view.replace(edit, self.replace_region, fixed)
             # scroll viewport to the top of previous position
-            sublime.set_timeout(lambda: view.set_viewport_position((x, y - 1.0 * view.line_height())), 0)
+            sublime.set_timeout(lambda: view.set_viewport_position(
+                (x, y - 1.0 * view.line_height())), 0)
             # update status bar
-            sublime.set_timeout(lambda: sublime.status_message(PLUGIN_NAME + ': code fixed.'), 0)
+            sublime.set_timeout(lambda: sublime.status_message(
+                PLUGIN_NAME + ': code fixed.'), 0)
         else:
             # source text same as fixed text...
-            sublime.set_timeout(lambda: sublime.status_message(PLUGIN_NAME + ': nothing to fix.'), 0)
+            sublime.set_timeout(lambda: sublime.status_message(
+                PLUGIN_NAME + ': nothing to fix.'), 0)
 
     def _save_view_in_temp_file(self, view):
         # read buffer contents
@@ -121,7 +125,8 @@ class PhpTidyCommand(sublime_plugin.TextCommand):
         self.source = view.substr(self.replace_region)
 
         # create the temp file
-        tf = tempfile.NamedTemporaryFile(mode='wb', suffix='.php', delete=False)
+        tf = tempfile.NamedTemporaryFile(
+            mode='wb', suffix='.php', delete=False)
         tf.write(self.source.encode('utf-8'))
         tf.close()
 
@@ -139,4 +144,5 @@ class PhpTidyCommand(sublime_plugin.TextCommand):
 
     def is_enabled(self):
         return True if re.search(
-            'php', self.view.settings().get('syntax'), re.IGNORECASE) else False
+            'php', self.view.settings().get('syntax'),
+            re.IGNORECASE) else False
