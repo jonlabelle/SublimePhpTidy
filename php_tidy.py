@@ -26,6 +26,13 @@ PLUGIN_NAME = 'Php Tidy'
 
 
 class PhpTidyCommand(sublime_plugin.TextCommand):
+    temp_file_path = None
+    temp_file_name = None
+    tidy_path = None
+    temp_dir = None
+    tidy_bkup_file_path = None
+    tidy_cache_file_path = None
+
     def run(self, edit):
         view = self.view
 

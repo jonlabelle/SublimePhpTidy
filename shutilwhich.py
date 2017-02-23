@@ -6,13 +6,16 @@ if not hasattr(shutil, 'which'):
     import os
     import sys
 
-    # Everything below this point has been copied verbatim from the Python-3.3
-    # sources.
-    #
-    # source: https://github.com/mbr/shutilwhich
-
     def which(cmd, mode=os.F_OK | os.X_OK, path=None):
+        """
+        Everything below this point has been copied verbatim from
+        the Python-3.3 sources. See: https://github.com/mbr/shutilwhich
 
+        :param cmd: The command to search for.
+        :param mode: The file-access mode.
+        :param path: Optional path to search under.
+        :return: The path to the command, or None if not found.
+        """
         def _access_check(fn, access_mode):
             return os.path.exists(fn) \
                    and os.access(fn, access_mode) \
