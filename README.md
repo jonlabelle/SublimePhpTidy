@@ -1,8 +1,6 @@
 # Sublime Text PHP Allman Code Style
 
-[![Build Status](https://travis-ci.com/jonlabelle/SublimePhpTidy.svg?branch=master)](https://travis-ci.com/jonlabelle/SublimePhpTidy)
-
-A [Sublime Text](http://www.sublimetext.com) plug-in to style PHP code 
+A [Sublime Text](http://www.sublimetext.com) plug-in to style PHP code
 according to [Allman Coding Standards](http://en.wikipedia.org/wiki/Indent_style#Allman_style) (BSD Style).
 
 ## Install
